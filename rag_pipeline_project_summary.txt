@@ -1,0 +1,54 @@
+Demo RAG Pipeline – Project Summary
+
+Goal
+Build a fully local proof‑of‑concept Retrieval‑Augmented Generation (RAG) pipeline using the IGBPD work‑instruction dataset (~205 docs) and a lightweight open‑source LLM. The focus is hands‑on learning of embeddings, vector search, and LLM‑powered answer generation.
+
+---
+
+Key Objectives
+1. Data ingestion & cleaning  
+   • Clone IGBPD repo, normalise guidance text (strip HTML/bullets), store one document per file.  
+2. Chunking & Embedding  
+   • Split each doc into ~350‑token chunks with 40‑token overlap.  
+   • Generate embeddings locally (e.g. intfloat/e5‑large via sentence‑transformers).  
+3. Vector Store & Retrieval  
+   • Index embeddings in FAISS for fast cosine‑similarity search.  
+   • Retrieve top‑k relevant chunks for any user question.  
+4. Local LLM Generation  
+   • Run a small model (e.g. Mistral‑7B‑Instruct or Phi‑2) with a prompt that injects retrieved context and produces a citation‑rich answer.  
+5. Evaluation & Experimentation  
+   • Manual spot‑checks and simple recall@k metrics to gauge retrieval quality.  
+   • Iterate on chunk size, overlap, embedding model, and prompt style.
+
+---
+
+Minimal Tech Stack
+Layer          | Tooling (local)
+-------------- | -----------------
+Embeddings     | sentence‑transformers (e5‑large or MiniLM)
+Vector DB      | FAISS (in‑memory)
+LLM            | Ollama / llama.cpp for Mistral‑7B‑Instruct or Phi‑2
+Orchestration  | Plain Python scripts or LangChain for quicker wiring
+Hardware       | 16 GB RAM; optional 8 GB GPU for faster inference
+
+---
+
+Deliverables
+1. Python notebook / script set that:  
+   • downloads IGBPD, cleans & chunks;  
+   • builds embeddings and FAISS index;  
+   • runs a query(question) function returning an LLM answer + sources.  
+2. README explaining setup, how RAG works, and tweak knobs (chunk size, model, k).  
+3. Sample demo showing Q&A on at least three workflows (e.g. finance, HR, manufacturing).
+
+---
+
+Learning Outcomes
+• Practical experience with text chunking, vector embedding, and similarity search.  
+• Understanding of prompt construction for RAG (context wrapping, citation tracking).  
+• Insight into trade‑offs between embedding models, vector‑store parameters, and LLM size.
+
+---
+
+Next step
+Spin up a quick prototype notebook embedding two or three docs to verify retrieval quality before indexing the full corpus.
